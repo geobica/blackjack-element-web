@@ -36,6 +36,10 @@ interface MemberInfo {
      * Whether the user is set to have disambiguation name.
      */
     disambiguate: boolean;
+    /**
+     * Sets the color of the user's name, if needed based on flairs.
+     */
+    colorOverride?: string;
 }
 
 /**
@@ -83,7 +87,7 @@ export class DisambiguatedProfileViewModel
     private static readonly computeSnapshot = (
         props: DisambiguatedProfileViewModelProps,
     ): DisambiguatedProfileViewSnapshot => {
-        const { member, fallbackName, colored, emphasizeDisplayName, withTooltip, className } = props;
+        const { member, fallbackName, colored, emphasizeDisplayName, withTooltip, className, colorOverride } = props;
 
         // Compute display name
         const displayName = member?.rawDisplayName || fallbackName;
@@ -127,6 +131,7 @@ export class DisambiguatedProfileViewModel
             displayIdentifier,
             title,
             emphasizeDisplayName,
+            colorStyle: colorOverride ? { color: colorOverride } : undefined,
         };
     };
 
@@ -141,6 +146,11 @@ export class DisambiguatedProfileViewModel
         this.snapshot.set(DisambiguatedProfileViewModel.computeSnapshot(this.props));
     }
 
+    public setColorOverride(colorOverride: string | undefined): void {
+        this.props.colorOverride = colorOverride ?? undefined;
+        this.snapshot.set(DisambiguatedProfileViewModel.computeSnapshot(this.props));
+    }
+    
     public onClick(evt: MouseEvent<HTMLDivElement>): void {
         this.props.onClick?.(evt);
     }

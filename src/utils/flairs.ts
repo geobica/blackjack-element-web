@@ -38,6 +38,21 @@ export function getFlairsForRoom(client: MatrixClient, roomId: string): FlairMap
 }
 
 /**
+ * Get the flair color for a user in a room.
+ * Returns the color of the user's first flair alphabetically, or null if none.
+ */
+export function getUserFlairColor(client: MatrixClient, roomId: string, userId: string): string | null {
+    const flairs = getFlairsForRoom(client, roomId);
+    const names = Object.keys(flairs).sort();
+    for (const name of names) {
+        if (flairs[name].users.includes(userId)) {
+            return flairs[name].color || null;
+        }
+    }
+    return null;
+}
+
+/**
  * Save flairs to the room state event.
  */
 export async function saveFlairsForRoom(client: MatrixClient, roomId: string, flairs: FlairMap): Promise<void> {
@@ -49,7 +64,6 @@ export async function saveFlairsForRoom(client: MatrixClient, roomId: string, fl
  * and adds mentions of all members who have that flair in the message
  */
 export function applyFlairsToContent(content: Record<string, any>, flairs: FlairMap): void {
-    console.log("flairs",flairs);
     if (Object.keys(flairs).length === 0) return;
 
     const body: string | undefined = content.body;

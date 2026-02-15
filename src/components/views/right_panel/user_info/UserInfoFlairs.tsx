@@ -65,7 +65,7 @@ export const ExistingFlair: React.FC<{
                         ref={inputRef}
                         type="text"
                         value={editValue}
-                        onChange={(e) => setEditValue(e.target.value.replace(/[^a-zA-Z0-9_-]/g, ""))}
+                        onChange={(e) => setEditValue(e.target.value.replace(/[^a-zA-Z0-9#_-]/g, ""))}
                         onBlur={commitRename}
                         onKeyDown={onKeyDown}
                     /></span>:<span className="mx_UserInfo_existingFlair_notEditing" style={{ color: flairs[flairName].color || "#888888", fontWeight: "bold" }}>@{flairName}</span>}
@@ -115,10 +115,22 @@ export const FlairsEditor: React.FC<{
     );
 
     const renameFlair = useCallback(
-        async (oldFlairName: string, newFlairName: string) => {
+        async (oldFlairName: string, newFlairNameColor: string) => {
+            const parts = newFlairNameColor.split('#');
+            const newFlairName = parts[0];
+            var newFlairColor = "none";
+            if(parts.length>1){
+                newFlairColor = '#' + (parts[1] || '')
+                    .replace(/[^a-fA-F0-9]/g, '')
+                    .slice(0, 8);
+            }
+
             const updated: FlairMap = { ...flairs };
-            updated[newFlairName] = flairs[oldFlairName];
-            delete updated[oldFlairName];
+            if(newFlairName!=oldFlairName){
+                updated[newFlairName] = flairs[oldFlairName];
+                delete updated[oldFlairName];
+            }
+            updated[newFlairName]["color"] = newFlairColor;
             await saveFlairsForRoom(client, room.roomId, updated);
         },
         [client, room.roomId, flairs, user.userId],
