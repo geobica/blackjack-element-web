@@ -13,6 +13,7 @@ import { DeleteIcon } from "@vector-im/compound-design-tokens/assets/web/icons";
 import { _t } from "../../../../languageHandler";
 import { useUserInfoBasicViewModel } from "../../../viewmodels/right_panel/user_info/UserInfoBasicViewModel";
 import { PowerLevelSection } from "./UserInfoPowerLevels";
+import { FlairsSection } from "./UserInfoFlairs";
 import { Container } from "../UserInfo";
 import { IgnoreToggleButton } from "./UserInfoIgnoreButtonView";
 import Spinner from "../../elements/Spinner";
@@ -31,6 +32,7 @@ export const UserInfoBasicView: React.FC<{
     let synapseDeactivateButton;
     let spinner;
     let memberDetails;
+    let flairsSection;
     let adminToolsContainer;
 
     if (vm.showDeactivateButton) {
@@ -54,6 +56,7 @@ export const UserInfoBasicView: React.FC<{
             memberDetails = (
                 <PowerLevelSection user={member as RoomMember} room={room} roomPermissions={vm.roomPermissions} />
             );
+            flairsSection = <FlairsSection room={room} user={member as RoomMember} roomPermissions={vm.roomPermissions} />;
         }
 
         adminToolsContainer = (
@@ -80,6 +83,7 @@ export const UserInfoBasicView: React.FC<{
         <React.Fragment>
             <UserInfoBasicOptionsView room={room} member={member}>
                 {memberDetails}
+                {flairsSection}
             </UserInfoBasicOptionsView>
             {adminToolsContainer}
             {!vm.isMe && (

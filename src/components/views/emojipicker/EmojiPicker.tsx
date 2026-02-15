@@ -31,7 +31,7 @@ import {
 import { Key } from "../../../Keyboard";
 import { type ButtonEvent } from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
-import { getCustomEmotesForRoom } from "../../../utils/space-emotes";
+import { getCustomEmotesForRoom } from "../../../utils/emotes";
 import { mediaFromMxc } from "../../../customisations/Media";
 
 export const CATEGORY_HEADER_HEIGHT = 20;

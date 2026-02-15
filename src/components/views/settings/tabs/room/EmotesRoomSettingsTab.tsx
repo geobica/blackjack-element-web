@@ -10,7 +10,7 @@ import AccessibleButton from "../../../elements/AccessibleButton";
 import SettingsTab from "../SettingsTab";
 import { SettingsSection } from "../../shared/SettingsSection";
 import { mediaFromMxc } from "../../../../../customisations/Media";
-import { EMOTE_EVENT_TYPE } from "../../../../../utils/space-emotes";
+import { EMOTE_EVENT_TYPE } from "../../../../../utils/emotes";
 import MatrixClientContext from "../../../../../contexts/MatrixClientContext";
 import SpaceStore from "../../../../../stores/spaces/SpaceStore";
 

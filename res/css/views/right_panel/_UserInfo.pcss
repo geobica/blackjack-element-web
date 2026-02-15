@@ -173,6 +173,106 @@ Please see LICENSE files in the repository root for full details.
         }
     }
 
+    .mx_UserInfo_flairsField {
+        margin: 6px 0;
+
+        display: flex;
+        flex-direction: column;
+        gap: var(--cpd-space-1x);
+        padding: var(--cpd-space-2x) 0;
+
+        .mx_UserInfo_existingFlair {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+
+            flex-direction: row;
+            justify-content: space-between;
+            border: 1px solid $separator;
+            border-radius: 8px;
+            font-size: var(--cpd-font-size-body-sm);
+
+            .mx_UserInfo_existingFlair_flairName {
+                flex-grow: 1;
+                padding: 8px 9px;
+                text-align: left;
+            }
+
+            .mx_UserInfo_existingFlair_rename {
+                align-items: right;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0 var(--cpd-space-1x);
+                font-size: var(--cpd-font-size-body-sm);
+                color: inherit;
+                opacity: 0.6;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .mx_UserInfo_existingFlair_remove {
+                align-items: right;
+                background: none;
+                border: none;
+                cursor: pointer;
+                font-size: var(--cpd-font-size-body-sm);
+                color: inherit;
+                opacity: 0.6;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .mx_UserInfo_flairAdder {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            box-sizing: border-box;
+
+            flex-direction: row;
+            justify-content: space-between;
+            border: 1px solid $separator;
+            border-radius: 8px;
+            font-size: var(--cpd-font-size-body-sm);
+
+            button {
+                background: none;
+                border: 1px $separator;
+                border-radius: 4px;
+                cursor: pointer;
+                padding: var(--cpd-space-1x) var(--cpd-space-2x);
+                width: 100%;
+                font-size: var(--cpd-font-size-body-sm);
+                color: var(--cpd-color-text-secondary);
+
+                &:hover {
+                    border-color: var(--cpd-color-text-secondary);
+                }
+            }
+
+            .mx_UserInfo_flairDropdown {
+                display: flex;
+                flex-direction: column;
+                gap: var(--cpd-space-1x);
+
+                .mx_UserInfo_flairDropdown_row {
+                    padding: 8px 9px;
+                    align-items: center;
+                    width: 100%;
+                    box-sizing: border-box;
+
+                    font-size: var(--cpd-font-size-body-sm);
+                }
+            }
+        }
+    }
+
     .mx_UserInfo_memberDetails {
         .mx_UserInfo_profileField {
             display: flex;
