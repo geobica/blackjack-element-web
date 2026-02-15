@@ -51,8 +51,6 @@ I had tried to add the ability to add custom emotes to spaces in the same way Di
 },
 ```
 
-Emotes
-
 Disclaimer: A guy on a train told me a couple weeks ago that I should try using Claude Code for coding so to experiment with that I used Claude Opus 4.6 to write much of the code for the Custom Emotes functionality, and to search for stuff for the other parts of this. I say this as a disclaimer because it certainly made some questionable decisions about file structure, and isn't ideal for production level code but this fork *is* intended to be bespoke, so I'll leave it for now to clean up later. Maybe I'll regret that, idk, blame the train guy.
 
 Update after doing the Pingable Flairs part: Ok yeah the code that that generated is quite problematic, so as a policy, I'm going to avoid using it to write anything that gets published and isn't like really trivial. Basically, since I'm still figuring this technology out, I'm thinking it works for prototyping and search and autocomplete but not for actually writing code, since I need to understand what's going on.
