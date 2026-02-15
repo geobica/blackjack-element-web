@@ -42,6 +42,10 @@ export interface DisambiguatedProfileViewSnapshot {
      * Whether to emphasize the display name with additional styling.
      */
     emphasizeDisplayName?: boolean;
+    /**
+     * Optional inline style for overriding the display name color (e.g., flair color).
+     */
+    colorStyle?: React.CSSProperties;
 }
 
 /**
@@ -78,7 +82,7 @@ interface DisambiguatedProfileViewProps {
  * ```
  */
 export function DisambiguatedProfileView({ vm }: Readonly<DisambiguatedProfileViewProps>): JSX.Element {
-    const { displayName, colorClass, displayIdentifier, title, emphasizeDisplayName, className } = useViewModel(vm);
+    const { displayName, colorClass, displayIdentifier, title, emphasizeDisplayName, className, colorStyle } = useViewModel(vm);
 
     const displayNameClasses = classNames(colorClass, {
         [styles.disambiguatedProfile_displayName]: emphasizeDisplayName,
@@ -104,7 +108,7 @@ export function DisambiguatedProfileView({ vm }: Readonly<DisambiguatedProfileVi
             role={vm.onClick ? "button" : undefined}
             tabIndex={vm.onClick ? 0 : undefined}
         >
-            <span className={displayNameClasses} dir="auto">
+            <span className={displayNameClasses} style={colorStyle} dir="auto">
                 {displayName}
             </span>
             {/* mx_DisambiguatedProfile_mxid is required for PCSS selectors like .mx_MemberTileView .mx_DisambiguatedProfile_mxid */}

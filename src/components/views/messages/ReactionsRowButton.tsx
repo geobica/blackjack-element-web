@@ -19,7 +19,7 @@ import { ReactionsRowButtonTooltipViewModel } from "../../../viewmodels/message-
 import AccessibleButton from "../elements/AccessibleButton";
 import MatrixClientContext from "../../../contexts/MatrixClientContext";
 import { REACTION_SHORTCODE_KEY } from "./ReactionsRow";
-import { getCustomEmotesForRoom } from "../../../utils/space-emotes";
+import { getCustomEmotesForRoom } from "../../../utils/emotes";
 
 export interface IProps {
     // The event we're displaying reactions for

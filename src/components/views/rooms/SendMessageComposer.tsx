@@ -60,7 +60,8 @@ import { type IDiff } from "../../../editor/diff";
 import { getBlobSafeMimeType } from "../../../utils/blobs";
 import { EMOJI_REGEX } from "../../../HtmlUtils";
 import { attachMentions, attachRelation } from "../../../utils/messages";
-import { applyCustomEmotesToContent, getCustomEmotesForRoom } from "../../../utils/space-emotes";
+import { applyCustomEmotesToContent, getCustomEmotesForRoom } from "../../../utils/emotes";
+import { applyFlairsToContent, getFlairsForRoom } from "../../../utils/flairs";
 
 // The prefix used when persisting editor drafts to localstorage.
 export const EDITOR_STATE_STORAGE_PREFIX = "mx_cider_state_";
@@ -417,6 +418,11 @@ export class SendMessageComposer extends React.Component<ISendMessageComposerPro
             // Replace custom emote shortcodes with HTML img tags
             const customEmotes = getCustomEmotesForRoom(this.props.mxClient, roomId);
             applyCustomEmotesToContent(content, customEmotes);
+
+            // Look for strings like @flairname and formats it to show the flair in bold with color
+            // and include mentions of all members who have that flair
+            const flairs = getFlairsForRoom(this.props.mxClient, roomId);
+            applyFlairsToContent(content, flairs);
 
             // don't bother sending an empty message
             if (!content.body.trim()) return;

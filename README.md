@@ -11,6 +11,16 @@
 
 ## Changes:
 
+### Pingable Flairs:
+
+Similar to Discord's mentionable roles, flairs can be given to users within a room which can be sent in chat to ping all users who have that role.
+
+Flairs are stored in ``m.room.flairs`` and exist on a per-room basis, though to have Discord-like functionality, they would be ideally synced across all rooms within a space, so I need to decide whether to have that happen automatically or whether to have a button or extra options for that, so users can configure roles for specific rooms or to have the option of having different flairs in each room.
+
+Flairs can be assigned colors which display when you send the flair in a message, and which determine the color of usernames in the chat. Colors are not fully implemented, and I have more plans as to how they will be displayed, and for things like priority of colors, translucency, and options for having some flairs not recolor people's names, but for now they are at least functional.
+
+To set a flair's color, click the 'edit' button on the User Info panel and type in a hex code at the end of the flair name, so if you want to make the ``@gamers`` flair orange, type in ``@gamers#f0a000`` and press 'enter'.
+
 ### Room Ordering:
 
 I changed the default way in which rooms are ordered within spaces to be based on a number code placed in square brackets at the start of the room's topic. This works for enabling users to set the order to whatever they want, though I am aware that at least one other Matrix client (I think it was commet.chat and maybe another?) have drag and drop room ordering, which I may want to investigate to understand how they did that and where they were storing the room ordering information. Ideally, the space owner would be able to determine how the rooms are ordered and it should appear the same for everyone who joins, like how it does on Discord. In order to get this continuity of user experience, I also made it so "Rooms" is the default option selected for what to view rather than "People" or "Unreads", as those options do not exist in Discord and it creates confusion for new users. This causes issues when looking at Home or trying to read your DMs though, so I will need to look into how to make those work differently.
@@ -41,7 +51,11 @@ I had tried to add the ability to add custom emotes to spaces in the same way Di
 },
 ```
 
+Emotes
+
 Disclaimer: A guy on a train told me a couple weeks ago that I should try using Claude Code for coding so to experiment with that I used Claude Opus 4.6 to write much of the code for the Custom Emotes functionality, and to search for stuff for the other parts of this. I say this as a disclaimer because it certainly made some questionable decisions about file structure, and isn't ideal for production level code but this fork *is* intended to be bespoke, so I'll leave it for now to clean up later. Maybe I'll regret that, idk, blame the train guy.
+
+Update after doing the Pingable Flairs part: Ok yeah the code that that generated is quite problematic, so as a policy, I'm going to avoid using it to write anything that gets published and isn't like really trivial. Basically, since I'm still figuring this technology out, I'm thinking it works for prototyping and search and autocomplete but not for actually writing code, since I need to understand what's going on.
 
 ### Threads Button:
 

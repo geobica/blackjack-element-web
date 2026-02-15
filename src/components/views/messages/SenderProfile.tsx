@@ -13,6 +13,8 @@ import { useCreateAutoDisposedViewModel, DisambiguatedProfileView } from "@eleme
 
 import { DisambiguatedProfileViewModel } from "../../../viewmodels/profile/DisambiguatedProfileViewModel";
 import { useRoomMemberProfile } from "../../../hooks/room/useRoomMemberProfile";
+import { useMatrixClientContext } from "../../../contexts/MatrixClientContext";
+import { getUserFlairColor } from "../../../utils/flairs";
 
 interface IProps {
     mxEvent: MatrixEvent;
@@ -22,6 +24,9 @@ interface IProps {
 
 export default function SenderProfile({ mxEvent, onClick, withTooltip }: IProps): JSX.Element {
     const sender = mxEvent.getSender();
+    const client = useMatrixClientContext();
+    const roomId = mxEvent.getRoomId();
+    const flairColor = sender && roomId ? getUserFlairColor(client, roomId, sender) : null;
 
     const member = useRoomMemberProfile({
         userId: sender,
@@ -38,12 +43,17 @@ export default function SenderProfile({ mxEvent, onClick, withTooltip }: IProps)
                 emphasizeDisplayName: true,
                 withTooltip,
                 className: "mx_DisambiguatedProfile",
+                colorOverride: flairColor ?? undefined,
             }),
     );
 
     useEffect(() => {
         disambiguatedProfileVM.setMember(sender ?? "", member);
     }, [disambiguatedProfileVM, member, sender]);
+    
+    useEffect(() => {
+        disambiguatedProfileVM.setColorOverride(flairColor ?? undefined);
+    }, [disambiguatedProfileVM, flairColor]);
     return mxEvent.getContent().msgtype !== MsgType.Emote ? (
         <DisambiguatedProfileView vm={disambiguatedProfileVM} />
     ) : (
