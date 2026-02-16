@@ -32,7 +32,11 @@ export const ExistingFlair: React.FC<{
     renameFlair;
 }> = ({ flairs, flairName, user, removeFlair, renameFlair }) => {
     const [editing, setEditing] = useState(false);
-    const [editValue, setEditValue] = useState(flairName);
+    var flairNameAndColor = flairName+"";
+    if(flairs[flairName].color!="none"&&flairs[flairName].color!=undefined){
+        flairNameAndColor = flairName+flairs[flairName].color;
+    }
+    const [editValue, setEditValue] = useState(flairNameAndColor);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const commitRename = useCallback(() => {
@@ -41,49 +45,56 @@ export const ExistingFlair: React.FC<{
         if (trimmed && trimmed !== flairName) {
             renameFlair(flairName, trimmed);
         } else {
-            setEditValue(flairName);
+            setEditValue(flairNameAndColor);
         }
-    }, [editValue, flairName, renameFlair]);
+    }, [editValue, flairNameAndColor, renameFlair]);
 
     const onKeyDown = useCallback(
         (e: React.KeyboardEvent) => {
             if (e.key === "Enter") {
                 commitRename();
             } else if (e.key === "Escape") {
-                setEditValue(flairName);
+                setEditValue(flairNameAndColor);
                 setEditing(false);
             }
         },
-        [commitRename, flairName],
+        [commitRename, flairNameAndColor],
     );
 
 
     return (
-        <div className="mx_UserInfo_existingFlair">
-            <div className="mx_UserInfo_existingFlair_flairName">
-                {editing?<span className="mx_UserInfo_existingFlair_editing">@<input
-                        ref={inputRef}
-                        type="text"
-                        value={editValue}
-                        onChange={(e) => setEditValue(e.target.value.replace(/[^a-zA-Z0-9#_-]/g, ""))}
-                        onBlur={commitRename}
-                        onKeyDown={onKeyDown}
-                    /></span>:<span className="mx_UserInfo_existingFlair_notEditing" style={{ color: flairs[flairName].color || "#888888", fontWeight: "bold" }}>@{flairName}</span>}
-            </div>
-            <button
-                className="mx_UserInfo_existingFlair_rename"
-                onClick={() => setEditing(true)}
-                aria-label={_t("flairs|edit",{flairName:flairName})}
-            >
-                edit
-            </button><button
-                className="mx_UserInfo_existingFlair_remove"
-                onClick={() => removeFlair(flairName)}
-                aria-label={_t("flairs|remove",{flairName:flairName,user:user})}
-            >
-                ✕
-            </button>
-        </div>
+        <span className="mx_UserInfo_existingFlair">
+            <span class="mx_UserInfo_existingFlair_invis">A</span>
+            <span className="mx_UserInfo_existingFlair_leftGroup">
+                <div className="mx_UserInfo_existingFlair_flairName">
+                    {editing?<span><span className="mx_UserInfo_existingFlair_notEditing" style={{ color: flairs[flairName].color || "#888888", fontWeight: "bold" }}>@</span>
+                        <span className="mx_UserInfo_existingFlair_editing"><input
+                            className="mx_UserInfo_existingFlair_editing_input"
+                            ref={inputRef}
+                            type="text"
+                            value={editValue}
+                            onChange={(e) => setEditValue(e.target.value.replace(/[^a-zA-Z0-9 #_-]/g, ""))}
+                            onBlur={commitRename}
+                            onKeyDown={onKeyDown}
+                        /></span></span>:<span className="mx_UserInfo_existingFlair_notEditing" style={{ color: flairs[flairName].color || "#888888", fontWeight: "bold" }}>@{flairName}</span>}
+                </div>
+            </span>
+            <span className="mx_UserInfo_existingFlair_rightGroup">
+                <button
+                    className="mx_UserInfo_existingFlair_rename"
+                    onClick={() => setEditing(!editing)}
+                    aria-label={_t("flairs|edit",{flairName:flairName})}
+                >
+                    edit
+                </button><button
+                    className="mx_UserInfo_existingFlair_remove"
+                    onClick={() => removeFlair(flairName)}
+                    aria-label={_t("flairs|remove",{flairName:flairName,user:user})}
+                >
+                    ✕
+                </button>
+            </span>
+        </span>
     );
 };
 
