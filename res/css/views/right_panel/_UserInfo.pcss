@@ -182,6 +182,7 @@ Please see LICENSE files in the repository root for full details.
         padding: var(--cpd-space-2x) 0;
 
         .mx_UserInfo_existingFlair {
+            position: relative;
             display: flex;
             align-items: center;
             width: 100%;
@@ -226,6 +227,37 @@ Please see LICENSE files in the repository root for full details.
                 &:hover {
                     opacity: 1;
                 }
+            }
+
+            .mx_UserInfo_existingFlair_editing {
+                white-space:nowrap;
+            }
+
+            .mx_UserInfo_existingFlair_editing_input {
+                margin: 0px !important;
+                padding: 0px;
+                display: inline-block !important;
+            }
+
+            .mx_UserInfo_existingFlair_invis {
+                padding: 8px 9px;
+                visibility: hidden;
+                pointer-events: none;
+            }
+
+            .mx_UserInfo_existingFlair_leftGroup {
+                position: absolute;
+                align-items: center;
+                left: var(--cpd-space-1x);
+                display: inline-flex;
+            }
+
+            .mx_UserInfo_existingFlair_rightGroup {
+                position: absolute;
+                right: var(--cpd-space-1x);
+                top: 50%;
+                transform: translateY(-50%);
+                display: inline-flex;
             }
         }
 
